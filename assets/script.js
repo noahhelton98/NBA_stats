@@ -14,16 +14,22 @@ displayMain(currentdate)
 teamScores.hide()
 
 $('#searchBtn').on('click', function(){
+  //$('#tableStats').html('')
+  $('#teamScores').hide()
+  $('#todayScores').hide()
+  $('#tableStats').show()
+  $('#theadData').html('')
+  $('#tbodyData').html('')
   getSeasonAverageSinglePlayer($('#searchBar').val());
   storedPlayers.push($('#searchBar').val());
   saveToLocalStorage($('#searchBar').val());
+  dateEl.text($('#searchBar').val());
 
-  $('#content').append(
+  //currentdate.text($('#searchBar').val())
+  $('#theadData').append(
     `
-  <h2>${$('#searchBar').val()}</h2>
   <tr>
-  <th><b>Season</b></th>
-
+    <th><b>Season</b></th>
     <th>Games Played</th>
     <th>Minutes</th>
     <th>Points</th>
@@ -34,8 +40,10 @@ $('#searchBtn').on('click', function(){
     <th>Blocks</th>
     <th>Steals</th>
     <th>Turnovers</th>
+    <th>Fouls</th>
+
     <th>FG Made</th>
-    <th>FG Attempte</th>
+    <th>FG Attempted</th>
     <th>FG Percent</th>
     <th>FT Made</th>
     <th>FT Attempted</th>
@@ -69,6 +77,9 @@ fetch('https://www.balldontlie.io/api/v1/teams', {
 
 //Tell the btn what to do on click event
   teamBtns.on('click', function(event){
+    $('#Stats').hide()
+    dateEl.text(moment().format("MMM Do, YYYY"));
+
     var t = $(this).index() + 1
     var teamClicked = teamBtns[$(this).index()].innerHTML
     loadTeamInfo(t)
@@ -112,32 +123,64 @@ function getSeasonAverageSinglePlayer(player){
       seasons.push(currentYear - i)
     }
     seasons = seasons.sort()
+    console.log(seasons)
     for (var i =0; i < seasons.length; i++){
+      console.log(seasons[i])
   fetch (`https://www.balldontlie.io/api/v1/season_averages?player_ids[]=${id}&season=${seasons[i]}`, {  
       method: 'GET'
   }).then(function (response){
     return response.json();
   }).then (function (data){
      if (data.data.length > 0){
-      
-      var gamesPlayed = data.data.season;
-      var minutes = data.data.min;
-      var points = data.data.pts;
-      var ast = data.data.ast;
-      var rebounds = data.data.reb;
-      var dreb = data.data.dreb;
-      var oreb = data.data.oreb;
-      var block = data.data.blk;
-      var steals =data.data.stl;
-      var turnovers =data.data.turnovers;
-      var fouls = data.data.pf;
-      var fgM  = data.data.fgm;
-      var fgA = data.data.fgA;
-      var fgPercent = data.data.fg_pct;
-      var ftM = data.data.ftm;
-      var ftA = data.data.fta;
-      var frPercent= data.data.ft_pct;
+       console.log(data.data)
+       var season = data.data[0].season
+      var gamesPlayed = data.data[0].games_played;
+      var minutes = data.data[0].min;
+      var points = data.data[0].pts;
+      var ast = data.data[0].ast;
+      var rebounds = data.data[0].reb;
+      var dreb = data.data[0].dreb;
+      var oreb = data.data[0].oreb;
+      var block = data.data[0].blk;
+      var steals =data.data[0].stl;
+      var turnovers = data.data[0].turnover;
+      var fouls = data.data[0].pf;
+      var fgM  = data.data[0].fgm;
+      var fgA = data.data[0].fga;
+      var fgPercent = data.data[0].fg_pct;
+      var ftM = data.data[0].ftm;
+      var ftA = data.data[0].fta;
+      var ftPercent= data.data[0].ft_pct;
+
+      $('#tbodyData').append(`
+      <tr>
+        <td>${season}</td>
+        <td>${gamesPlayed}</td>
+        <td>${minutes}</td>
+        <td>${points}</td>
+        <td>${ast}</td>
+        <td>${rebounds}</td>
+        <td>${dreb}</td>
+        <td>${oreb}</td>
+        <td>${block}</td>
+        <td>${steals}</td>
+        <td>${turnovers}</td>
+        <td>${fouls}</td>
+        <td>${fgM}</td>
+        <td>${fgA}</td>
+        <td>${fgPercent} %</td>
+        <td>${ftM}</td>
+        <td>${ftA}</td>
+        <td>${ftPercent} %</td>
+      </tr>
+    
+      `)
+
+
+
     } 
+
+
   })
 }
 })
