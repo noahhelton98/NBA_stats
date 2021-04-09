@@ -6,18 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Train One">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="assets/style.css"/>
   <title>Stats from the Key</title>
 </head>
 
-<div class = 'jumbotron' style = "font-family:'Train-One'; ">Stats from the Key</div>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <img src="./assets/images/fulvio-ambrosanio-dwXPcwzdLcE-unsplash.jpg" alt="hoop img">
+      <input id="searchBar" type="text" placeholder="Search a Player" >
+      <button id = 'searchBtn' class="btn btn-primary">Search</button>
+    </div>
+    <div class="col-md-9 d-flex justify-content-center align-self-center" style="margin-left: -10%;">
+      <text class="display-4" style="font-size: 5em;">Stats From the Key<text>
+    </div>
+  </div>
+</div>
+</div>
 
 
 <section id = 'main'class="row">
   <div id = 'allTeams' class="btn-group-vertical"></div>
   <main id = 'content' class = 'col'>
     <h2 id = 'currentDayDisplay'></h2>
+    <section id ='todayScores'></section>
+    <section id = 'teamScores'> </section>
+
   </main>
 </section>
 
