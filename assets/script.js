@@ -17,8 +17,8 @@ $('#searchBtn').on('click', function(){
   //$('#tableStats').html('')
   $('#teamScores').hide()
   $('#todayScores').hide()
-  $('#tableStats').show()
-  $('#theadData').html('')
+  $('#Stats').show()
+    $('#theadData').html('')
   $('#tbodyData').html('')
   getSeasonAverageSinglePlayer($('#searchBar').val());
   storedPlayers.push($('#searchBar').val());
