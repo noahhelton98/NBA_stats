@@ -12,7 +12,7 @@ displayMain(currentdate)
 teamScores.hide()
 
 
-  if (JSON.parse(localStorage.getItem('players'))){
+if (JSON.parse(localStorage.getItem('players'))){
     for (var i =0; i < JSON.parse(localStorage.getItem('players')).length; i++){
       storedPlayers.push(JSON.parse(localStorage.getItem('players'))[i])
       $('#newButtons').append(`<button class="btn btn-group-vertical">${JSON.parse(localStorage.getItem('players'))[i]}</button>`)
@@ -20,11 +20,20 @@ teamScores.hide()
   }
 
 
+if( storedPlayers.length >0 ){
+  for (var i =0 ; i < storedPlayers.length; i++){
 
+    $('#Stats').show()
+    prevSearchedFunction(storedPlayers[i])
+  }
+}
 
 function prevSearchedFunction(player){
   $('#newButtons').append(`<button class="btn btn-group-vertical">${player}</button>`)
   $('#newButtons button').on('click', function(){
+    $('#teamScores').hide()
+    $('#todayScores').hide()
+    $('update').hide()
     dateEl.text(player);
 
     $('#theadData').html('')
