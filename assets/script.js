@@ -5,20 +5,44 @@ var currentdate = moment().format('YYYY-MM-DD');
 var dateEl = $('#currentDayDisplay');
 var mainPageScores = $('#todayScores')
 var teamScores  = $('#teamScores')
-
-
 var storedPlayers = [];
 
 displayMain(currentdate)
 
 teamScores.hide()
 
+function getLocalStorage(){
+  if (JSON.parse(localStorage.getItem('players'))){
+    for (var i =0; i < JSON.parse(localStorage.getItem('players')).length; i++){
+      storedPlayers.push(JSON.parse(localStorage.getItem('players'))[i])
+      $('#newButtons').append(`<button class="btn btn-group-vertical">${JSON.parse(localStorage.getItem('players'))[i]}</button>`)
+  }
+  }
+}
+getLocalStorage()
+
+
+
+function prevSearchedFunction(player){
+  $('#newButtons').append(`<button class="btn btn-group-vertical">${player}</button>`)
+  $('#newButtons').on('click', function(){
+    getSeasonAverageSinglePlayer(($(this)[0].innerText));
+
+  })
+}
+
+
+
 $('#searchBtn').on('click', function(){
+
+
+  prevSearchedFunction($('#searchBar').val())
+
   //$('#tableStats').html('')
   $('#teamScores').hide()
   $('#todayScores').hide()
   $('#Stats').show()
-    $('#theadData').html('')
+  $('#theadData').html('')
   $('#tbodyData').html('')
   getSeasonAverageSinglePlayer($('#searchBar').val());
   storedPlayers.push($('#searchBar').val());
@@ -42,11 +66,9 @@ $('#searchBtn').on('click', function(){
     <th>Turnovers</th>
     <th>Fouls</th>
 
-    <th>FG Made</th>
-    <th>FG Attempted</th>
+   
     <th>FG Percent</th>
-    <th>FT Made</th>
-    <th>FT Attempted</th>
+
     <th>FT Percent</th>
   </tr>
   `)
@@ -166,11 +188,9 @@ function getSeasonAverageSinglePlayer(player){
         <td>${steals}</td>
         <td>${turnovers}</td>
         <td>${fouls}</td>
-        <td>${fgM}</td>
-        <td>${fgA}</td>
+
         <td>${fgPercent} %</td>
-        <td>${ftM}</td>
-        <td>${ftA}</td>
+
         <td>${ftPercent} %</td>
       </tr>
     
@@ -204,18 +224,19 @@ function displayMain(date){
       var awayTeamScore = data.data[i].visitor_team_score
       var date = currentdate;
       var startTime = data.data[i].status
+      var timeLeft = data.data[i].time
       var text =''
 
       if (startTime.includes(':')){
         text ='Start Time: '
       }else{
-        text = 'Quarter: '
+        text = `Quarter: ${timeLeft}`
       }
 
      mainPageScores.append(`
-     <section class = scoreUpdateCard>
+     <section class = scoreCards>
      <h2> ${date} </h2>
-     <p> ${text} ${startTime}
+     <p> ${text} ${startTime}</p>
      <p>${homeTeam}: ${homeTeamScore} </p>
 
      <p>${awayTeam}: ${awayTeamScore} </p> 
@@ -284,11 +305,13 @@ function loadTeamInfo(team){
           }
           console.log(spanColorHome)
           teamScores.append(`
+          <section class =scoreCards >
           <h2> ${date} </h2>
           <p> <span style = "background-color: ${spanColorHome}">${homeTeam}:  ${homeTeamScore} <span> </p>
           <p> <span style = "background-color:  ${spanColorAway}">${awayTeam}:  ${awayTeamScore} <span> </p>
 
-          <p> ${status} </p>
+          <p> ${status}  </p>
+          </section>
 
           `)
         }
@@ -307,13 +330,12 @@ function loadTeamInfo(team){
 
 
 
-
 var saveToLocalStorage = function(player){
   localStorage.setItem("players", JSON.stringify(storedPlayers))
 }
 
 
 $('#clearBtn').on('click', function(){
-  //$('#newButtons').html('');
-  //localStorage.clear('cities');
+  localStorage.clear('cities');
+  $('#newButtons').html('')
 })
