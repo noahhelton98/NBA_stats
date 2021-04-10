@@ -11,21 +11,24 @@ displayMain(currentdate)
 
 teamScores.hide()
 
-function getLocalStorage(){
+
   if (JSON.parse(localStorage.getItem('players'))){
     for (var i =0; i < JSON.parse(localStorage.getItem('players')).length; i++){
       storedPlayers.push(JSON.parse(localStorage.getItem('players'))[i])
       $('#newButtons').append(`<button class="btn btn-group-vertical">${JSON.parse(localStorage.getItem('players'))[i]}</button>`)
   }
   }
-}
-getLocalStorage()
+
 
 
 
 function prevSearchedFunction(player){
   $('#newButtons').append(`<button class="btn btn-group-vertical">${player}</button>`)
-  $('#newButtons').on('click', function(){
+  $('#newButtons button').on('click', function(){
+    dateEl.text(player);
+
+    $('#theadData').html('')
+    $('#tbodyData').html('')
     getSeasonAverageSinglePlayer(($(this)[0].innerText));
 
   })
