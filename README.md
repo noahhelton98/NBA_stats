@@ -4,9 +4,9 @@ This application will allow you to view current todays current scores live. Also
 This website was made using the [balldontlieAPI](https://www.balldontlie.io/#introduction) as well as [Moment JS](https://momentjs.com/). 
 
 Demo: 
-![screenshot](assets/images/Screen Shot 2021-04-10 at 9.39.42 AM.png)
-![screenshot](assets/images/Screen Shot 2021-04-10 at 9.39.50 AM.png)
-![screenshot](assets/images/Screen Shot 2021-04-10 at 9.39.58 AM.png)
+![screenshot](assets/images/ss1.png)
+![screenshot](assets/images/ss2.png)
+![screenshot](assets/images/ss3.png)
 
 
 
